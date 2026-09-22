@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Neon Music Player</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- Ambient Neon Blur Backdrop Layer (smooth subtle atmospheric aura) -->
+    <div id="ambientBlurContainer" class="ambient-blur-container">
+      <div class="ambient-blob blob-1"></div>
+      <div class="ambient-blob blob-2"></div>
+      <div class="ambient-blob blob-3"></div>
+    </div>
+
+    <!-- Ambient Neon Edge Lighting Effect -->
+    <div id="screenEdgeLighting" class="screen-edge-lighting active"></div>
+    
+    <!-- Top App Bar -->
+    <header class="top-app-bar">
+      <div class="header-main">
+        <div class="app-brand">
+          <div class="brand-icon neon-glow">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+          </div>
+          <span class="brand-title neon-title">Neon Music Player</span>
+        </div>
+        <div class="header-actions">
+          <button id="neonThemeBtn" class="icon-btn neon-color-btn" title="Neon Teması Seç" aria-label="Neon Teması">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.28 19.64 10.59 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-4 7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4-3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+            </svg>
+          </button>
+          <button id="themeToggleBtn" class="icon-btn" title="Koyu / Aydınlık Mod" aria-label="Tema">
+            <svg id="themeIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+            </svg>
+          </button>
+          <button id="scanBtn" class="icon-btn" title="Kitaplığı Yenile" aria-label="Kitaplığı Yenile">
+            <svg id="scanIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+          </button>
+          <button id="settingsBtn" class="icon-btn" title="Ayarlar" aria-label="Ayarlar">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Sort Row -->
+      <div class="search-sort-bar">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Şarkı, sanatçı, albüm veya klasör ara..." autocomplete="off">
+          <button id="clearSearchBtn" class="clear-btn" style="display:none;" aria-label="Temizle">✕</button>
+        </div>
+        <div class="sort-wrapper">
+          <select id="sortSelect" aria-label="Sıralama">
+            <option value="title_asc">Başlık (A-Z)</option>
+            <option value="title_desc">Başlık (Z-A)</option>
+            <option value="artist">Sanatçı</option>
+            <option value="album">Albüm</option>
+            <option value="date_added">En Yeni Eklenen</option>
+            <option value="duration">En Uzun Süre</option>
+            <option value="size">Dosya Boyutu</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Permission Banner (if not granted) -->
+      <div id="permissionBanner" class="permission-banner" style="display: none;">
+        <div class="banner-text">
+          <span class="banner-title">Müzik Dosyalarına Erişim İzni Gerekli</span>
+          <span class="banner-desc">Cihazınızdaki şarkıları taramak ve çalmak için depolama iznine ihtiyaç var.</span>
+        </div>
+        <button id="grantPermissionBtn" class="btn-primary">İzin Ver</button>
+      </div>
+
+      <!-- Sleep Timer Active Indicator -->
+      <div id="sleepTimerBadge" class="sleep-timer-badge" style="display: none;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/>
+        </svg>
+        <span id="sleepTimerBadgeText">Uyku: 00:00</span>
+        <button id="cancelSleepBadgeBtn" class="badge-close">✕</button>
+      </div>
+    </header>
+
+    <!-- Main Content Screens -->
+    <main class="main-content">
+      <!-- Screen 1: Songs -->
+      <section id="screenSongs" class="screen-view active">
+        <!-- Demo Tracks Banner -->
+        <div id="demoSongsBanner" class="demo-banner">
+          <div class="demo-banner-content">
+            <div class="demo-icon-wrapper">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+              </svg>
+            </div>
+            <div class="demo-banner-info">
+              <span class="demo-banner-title">Örnek Demo Parçalar (Synthwave)</span>
+              <span class="demo-banner-desc">Ses motorunu ve neon efektleri hemen test edin</span>
+            </div>
+          </div>
+          <button id="playDemoNowBtn" class="btn-demo-play" title="Örnek Müziği Çal">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <span>Demoyu Çal</span>
+          </button>
+        </div>
+
+        <div class="section-meta">
+          <span id="songsCountText" class="count-badge">0 şarkı</span>
+          <span id="songsDurationText" class="duration-badge">0 dk</span>
+        </div>
+        <div id="songsList" class="songs-list">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- Screen 2: Folders -->
+      <section id="screenFolders" class="screen-view">
+        <div class="folder-header-bar">
+          <div class="folder-header-info">
+            <span class="section-title">Klasör Tarayıcısı</span>
+            <span class="section-subtitle">Cihazdaki müzik dizinleri</span>
+          </div>
+          <button id="pickSafFolderBtn" class="btn-secondary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+            </svg>
+            Klasör Seç (SAF)
+          </button>
+        </div>
+        <div id="foldersList" class="folders-list"></div>
+      </section>
+
+      <!-- Screen 3: Playlists & Favorites -->
+      <section id="screenPlaylists" class="screen-view">
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-sub="favs">Favoriler</button>
+          <button class="sub-tab-btn" data-sub="history">Son Çalınanlar</button>
+          <button class="sub-tab-btn" data-sub="custom">Çalma Listeleri</button>
+        </div>
+
+        <div id="favsContainer" class="sub-content active">
+          <div id="favsList" class="songs-list"></div>
+        </div>
+
+        <div id="historyContainer" class="sub-content">
+          <div class="history-actions">
+            <button id="clearHistoryBtn" class="btn-text">Geçmişi Temizle</button>
+          </div>
+          <div id="historyList" class="songs-list"></div>
+        </div>
+
+        <div id="customPlaylistsContainer" class="sub-content">
+          <div class="playlist-create-bar">
+            <input type="text" id="newPlaylistInput" placeholder="Yeni liste adı...">
+            <button id="createPlaylistBtn" class="btn-primary">Oluştur</button>
+          </div>
+          <div id="playlistsList" class="playlists-grid"></div>
+        </div>
+      </section>
+
+      <!-- Screen 4: Artists & Albums -->
+      <section id="screenLibrary" class="screen-view">
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-sub="artists">Sanatçılar</button>
+          <button class="sub-tab-btn" data-sub="albums">Albümler</button>
+        </div>
+        <div id="artistsContainer" class="sub-content active">
+          <div id="artistsList" class="artists-grid"></div>
+        </div>
+        <div id="albumsContainer" class="sub-content">
+          <div id="albumsList" class="albums-grid"></div>
+        </div>
+      </section>
+
+      <!-- Screen 5: Equalizer -->
+      <section id="screenEqualizer" class="screen-view">
+        <div class="eq-container">
+          <div class="eq-header">
+            <span class="section-title">Profesyonel Ekolayzır</span>
+            <div class="eq-switch-wrapper">
+              <span>Etkin</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="eqToggle" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Presets -->
+          <div class="eq-presets-scroll" id="eqPresetsList">
+            <!-- Chips dynamically loaded -->
+          </div>
+
+          <!-- Spectrum Visualizer -->
+          <div class="spectrum-visualizer" id="spectrumVisualizer">
+            <div class="bar" style="height: 40%"></div>
+            <div class="bar" style="height: 65%"></div>
+            <div class="bar" style="height: 85%"></div>
+            <div class="bar" style="height: 50%"></div>
+            <div class="bar" style="height: 70%"></div>
+          </div>
+
+          <!-- Frequency Sliders -->
+          <div class="eq-bands-container" id="eqBandsContainer">
+            <!-- 5 bands dynamically generated -->
+          </div>
+
+          <!-- Bass Boost Section -->
+          <div class="eq-effects-card">
+            <div class="effect-header">
+              <span class="effect-title">Bass Boost (Bas Güçlendirici)</span>
+              <span id="bassBoostValueText" class="effect-val">0%</span>
+            </div>
+            <input type="range" id="bassBoostSlider" min="0" max="1000" step="20" value="0" class="styled-range">
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mini Player Bar -->
+    <div id="miniPlayer" class="mini-player" style="display: none;">
+      <div class="mini-progress-bar">
+        <div id="miniProgressFill" class="mini-progress-fill"></div>
+      </div>
+      <div class="mini-content" id="miniPlayerTrigger">
+        <div class="mini-art-wrapper">
+          <img id="miniArt" src="" alt="Album Art" class="mini-art">
+          <div id="miniArtPlaceholder" class="mini-art-placeholder">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mini-info">
+          <span id="miniTitle" class="mini-title">Şarkı Adı</span>
+          <span id="miniArtist" class="mini-artist">Sanatçı</span>
+        </div>
+      </div>
+      <div class="mini-controls">
+        <button id="miniPlayBtn" class="icon-btn mini-btn" aria-label="Oynat / Duraklat">
+          <svg id="miniPlayIcon" viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <button id="miniNextBtn" class="icon-btn mini-btn" aria-label="Sonraki Şarkı">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-screen="screenSongs">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+        <span>Şarkılar</span>
+      </button>
+      <button class="nav-item" data-screen="screenFolders">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+        </svg>
+        <span>Klasörler</span>
+      </button>
+      <button class="nav-item" data-screen="screenPlaylists">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M19 9H2v2h17V9zm0-4H2v2h17V5zM2 15h11v-2H2v2zm14 0v6l5-3-5-3z"/>
+        </svg>
+        <span>Listeler</span>
+      </button>
+      <button class="nav-item" data-screen="screenLibrary">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 10l-2.5-1.5L13 12V6h2v3.5l1.5-.9 1.5.9V6h2v6z"/>
+        </svg>
+        <span>Sanatçı/Albüm</span>
+      </button>
+      <button class="nav-item" data-screen="screenEqualizer">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+        </svg>
+        <span>Ekolayzır</span>
+      </button>
+    </nav>
+
+    <!-- Fullscreen Now Playing Overlay -->
+    <div id="nowPlayingModal" class="now-playing-modal">
+      <!-- Subtle Ambient Backdrop Blur for Now Playing -->
+      <div class="np-backdrop-blur">
+        <div class="np-blur-glow np-glow-1"></div>
+        <div class="np-blur-glow np-glow-2"></div>
+      </div>
+
+      <div class="np-header">
+        <button id="npCloseBtn" class="icon-btn" aria-label="Kapat">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+          </svg>
+        </button>
+        <div class="np-header-title">
+          <span class="subtext">ŞU AN ÇALIYOR</span>
+          <span id="npHeaderAlbum" class="header-album-text">Albüm Adı</span>
+        </div>
+        <button id="npFavoriteBtn" class="icon-btn np-fav-btn" aria-label="Favori">
+          <svg id="npFavIcon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Large Album Artwork with Glowing Edge Lighting and Double-Tap Seek Cues -->
+      <div class="np-artwork-container">
+        <div id="npEdgeGlow" class="np-edge-light-aura"></div>
+        <div id="npSkipLeftCue" class="np-skip-cue left">-10s ⏪</div>
+        <div id="npSkipRightCue" class="np-skip-cue right">⏩ +10s</div>
+        <div class="np-art-card" id="npArtCard">
+          <img id="npArtwork" src="" alt="Albüm Kapağı" class="np-artwork-img">
+          <div id="npArtPlaceholder" class="np-artwork-placeholder">
+            <svg viewBox="0 0 24 24" width="84" height="84" fill="currentColor">
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+          </div>
+          <!-- Vinyl Disc Center and Grooves Effect -->
+          <div class="np-vinyl-center"></div>
+        </div>
+      </div>
+
+      <!-- Lyrics / Mini Visualizer Panel (Toggleable) -->
+      <div id="npLyricsPanel" class="np-lyrics-panel" style="display: none;">
+        <div class="lyrics-header">
+          <span>Şarkı Sözü / Parça Bilgisi</span>
+          <button id="closeLyricsBtn" class="btn-text">Kapat</button>
+        </div>
+        <div id="lyricsContent" class="lyrics-content">
+          <p class="lyrics-line active">♪ Neon synthwave pulse reverberating ♪</p>
+          <p class="lyrics-line">♪ Driving through the cyberpunk city nights ♪</p>
+          <p class="lyrics-line">♪ Digital horizons, illuminated lights ♪</p>
+          <p class="lyrics-line">♪ Feel the rhythm in the neon glow ♪</p>
+        </div>
+      </div>
+
+      <!-- Song Metadata & Dynamic Neon Visualizer -->
+      <div class="np-details">
+        <h2 id="npTitle" class="np-title">Şarkı Başlığı</h2>
+        <p id="npArtist" class="np-artist">Sanatçı Adı</p>
+        
+        <!-- Animated Neon Spectrum Bars in Now Playing -->
+        <div class="np-spectrum-bar" id="npSpectrumBar">
+          <div class="spectrum-bar-item" style="--d: 0.1s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.3s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.2s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.4s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.15s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.35s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.25s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.45s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.2s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.3s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.15s"></div>
+          <div class="spectrum-bar-item" style="--d: 0.4s"></div>
+        </div>
+      </div>
+
+      <!-- Seek Bar -->
+      <div class="np-seek-section">
+        <div class="seek-slider-container">
+          <input type="range" id="npSeekSlider" min="0" max="100" value="0" class="np-seek-range">
+        </div>
+        <div class="seek-time-row">
+          <span id="npCurrentTime">00:00</span>
+          <span id="npTotalTime">00:00</span>
+        </div>
+      </div>
+
+      <!-- Main Controls Row with 10s Rewind and Fast Forward -->
+      <div class="np-controls">
+        <button id="npShuffleBtn" class="icon-btn control-btn" title="Karışık Çal">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+          </svg>
+        </button>
+
+        <button id="npPrevBtn" class="icon-btn control-btn" title="Önceki">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+          </svg>
+        </button>
+
+        <!-- 10s Rewind Button -->
+        <button id="npRewind10Btn" class="icon-btn control-btn seek-btn" title="10 Saniye Geri Sar" aria-label="10 saniye geri">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12.5 3C7.81 3 4 6.81 4 11.5c0 1.95.66 3.75 1.78 5.2l-1.42 1.42C2.86 16.32 2 14.02 2 11.5 2 5.7 6.7 1 12.5 1c3.15 0 5.99 1.38 7.94 3.56L22 3v7h-7l3.29-3.29C16.89 4.96 14.83 3 12.5 3z"/>
+          </svg>
+          <span class="seek-label">-10s</span>
+        </button>
+
+        <button id="npPlayBtn" class="np-fab-play" title="Oynat / Duraklat">
+          <svg id="npPlayIcon" viewBox="0 0 24 24" width="34" height="34" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+
+        <!-- 10s Fast Forward Button -->
+        <button id="npForward10Btn" class="icon-btn control-btn seek-btn" title="10 Saniye İleri Sar" aria-label="10 saniye ileri">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M11.5 3C16.19 3 20 6.81 20 11.5c0 1.95-.66 3.75-1.78 5.2l1.42 1.42c1.5-1.8 2.36-4.1 2.36-6.62C22 5.7 17.3 1 11.5 1c-3.15 0-5.99 1.38-7.94 3.56L2 3v7h7L5.71 6.71C7.11 4.96 9.17 3 11.5 3z"/>
+          </svg>
+          <span class="seek-label">+10s</span>
+        </button>
+
+        <button id="npNextBtn" class="icon-btn control-btn" title="Sonraki">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+          </svg>
+        </button>
+
+        <button id="npRepeatBtn" class="icon-btn control-btn" title="Tekrarla">
+          <svg id="npRepeatIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
+          </svg>
+          <span id="repeatOneBadge" class="repeat-one-indicator" style="display:none;">1</span>
+        </button>
+      </div>
+
+      <!-- Secondary Tools Row -->
+      <div class="np-tools">
+        <button id="npSpeedBtn" class="tool-btn" title="Oynatma Hızı">
+          <span id="npSpeedText">1.0x</span>
+        </button>
+        <button id="npLyricsBtn" class="tool-btn" title="Şarkı Sözleri & Bilgi">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          <span>Sözler</span>
+        </button>
+        <button id="npSleepTimerBtn" class="tool-btn" title="Uyku Zamanlayıcı">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/>
+          </svg>
+          <span>Zamanlayıcı</span>
+        </button>
+        <button id="npEqShortcutBtn" class="tool-btn" title="Ekolayzır">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+          </svg>
+          <span>Ses Efekti</span>
+        </button>
+        <button id="npQueueBtn" class="tool-btn" title="Sıradakiler / Kuyruk">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M19 15v3h3v2h-3v3h-2v-3h-3v-2h3v-3h2zm-4-6H3V7h12v2zm4-4H3V3h16v2zm-8 8H3v-2h8v2z"/>
+          </svg>
+          <span>Kuyruk</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Queue Drawer / Sheet Modal -->
+    <div id="queueModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-sheet">
+        <div class="sheet-header">
+          <span class="sheet-title">Çalma Kuyruğu</span>
+          <div class="sheet-actions">
+            <button id="clearQueueBtn" class="btn-text">Kuyruğu Temizle</button>
+            <button id="closeQueueBtn" class="icon-btn">✕</button>
+          </div>
+        </div>
+        <div id="queueList" class="queue-list"></div>
+      </div>
+    </div>
+
+    <!-- Sleep Timer Modal -->
+    <div id="sleepTimerModal" class="modal-backdrop" style="display: none;">
+      <div class="dialog-box">
+        <h3 class="dialog-title">Uyku Zamanlayıcı</h3>
+        <p class="dialog-desc">Belirlenen süre sonunda müzik yavaşça kısılarak otomatik duracaktır.</p>
+        <div class="timer-options">
+          <button class="timer-opt-btn" data-min="5">5 Dakika</button>
+          <button class="timer-opt-btn" data-min="10">10 Dakika</button>
+          <button class="timer-opt-btn" data-min="15">15 Dakika</button>
+          <button class="timer-opt-btn" data-min="30">30 Dakika</button>
+          <button class="timer-opt-btn" data-min="45">45 Dakika</button>
+          <button class="timer-opt-btn" data-min="60">60 Dakika</button>
+        </div>
+        <div class="dialog-footer">
+          <button id="cancelSleepTimerBtn" class="btn-text">Zamanlayıcıyı İptal Et</button>
+          <button id="closeSleepTimerBtn" class="btn-secondary">Kapat</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Speed Selector Modal -->
+    <div id="speedModal" class="modal-backdrop" style="display: none;">
+      <div class="dialog-box">
+        <h3 class="dialog-title">Oynatma Hızı</h3>
+        <div class="speed-options">
+          <button class="speed-opt-btn" data-speed="0.5">0.5x</button>
+          <button class="speed-opt-btn" data-speed="0.75">0.75x</button>
+          <button class="speed-opt-btn active" data-speed="1.0">1.0x (Normal)</button>
+          <button class="speed-opt-btn" data-speed="1.25">1.25x</button>
+          <button class="speed-opt-btn" data-speed="1.5">1.5x</button>
+          <button class="speed-opt-btn" data-speed="2.0">2.0x</button>
+        </div>
+        <div class="dialog-footer">
+          <button id="closeSpeedBtn" class="btn-secondary">Kapat</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Song Context Menu Sheet -->
+    <div id="songContextModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-sheet">
+        <div class="context-song-header">
+          <div class="context-art-wrapper">
+            <img id="contextArt" src="" alt="Art">
+          </div>
+          <div class="context-info">
+            <span id="contextTitle" class="context-title">Şarkı Başlığı</span>
+            <span id="contextArtist" class="context-artist">Sanatçı • Albüm</span>
+          </div>
+        </div>
+        <div class="context-actions-list">
+          <button class="context-action-item" id="ctxPlayNext">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+            </svg>
+            <span>Sıradakine Ekle</span>
+          </button>
+          <button class="context-action-item" id="ctxAddToQueue">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            <span>Kuyruğun Sonuna Ekle</span>
+          </button>
+          <button class="context-action-item" id="ctxAddToPlaylist">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
+            </svg>
+            <span>Çalma Listesine Ekle</span>
+          </button>
+          <button class="context-action-item" id="ctxToggleFav">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span id="ctxFavText">Favorilere Ekle</span>
+          </button>
+          <button class="context-action-item" id="ctxShare">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+            </svg>
+            <span>Paylaş</span>
+          </button>
+          <button class="context-action-item" id="ctxDetails">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            <span>Şarkı Bilgileri</span>
+          </button>
+          <button class="context-action-item text-danger" id="ctxDelete">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
+            <span>Kütüphaneden / Cihazdan Sil</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Song Details / Metadata Dialog -->
+    <div id="songDetailsModal" class="modal-backdrop" style="display: none;">
+      <div class="dialog-box">
+        <h3 class="dialog-title">Şarkı Metadata Bilgileri</h3>
+        <div id="detailsContent" class="metadata-content"></div>
+        <div class="dialog-footer">
+          <button id="closeDetailsBtn" class="btn-secondary">Kapat</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add To Playlist Modal -->
+    <div id="addToPlaylistModal" class="modal-backdrop" style="display: none;">
+      <div class="dialog-box">
+        <h3 class="dialog-title">Çalma Listesine Ekle</h3>
+        <div id="playlistSelectionList" class="playlist-choice-list"></div>
+        <div class="dialog-footer">
+          <button id="closeAddToPlaylistBtn" class="btn-secondary">İptal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Neon Theme & Edge Lighting Customizer Modal -->
+    <div id="neonThemeModal" class="modal-backdrop" style="display: none;">
+      <div class="dialog-box neon-dialog">
+        <div class="neon-dialog-header">
+          <div class="neon-glow-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.28 19.64 10.59 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-4 7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4-3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm4 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="dialog-title">Neon Teması</h3>
+            <span class="dialog-sub">Neon ışıklandırma paletini seçin</span>
+          </div>
+        </div>
+
+        <div class="neon-themes-list">
+          <div class="neon-theme-option active" data-neon="cyber">
+            <div class="neon-theme-preview" style="background: linear-gradient(135deg, #00F0FF, #FF007F);"></div>
+            <div class="neon-theme-text">
+              <span class="neon-name">Cyber Neon</span>
+              <span class="neon-desc">Elektrik Turkuaz & Neon Fuşya</span>
+            </div>
+            <span class="neon-check">✓</span>
+          </div>
+
+          <div class="neon-theme-option" data-neon="violet">
+            <div class="neon-theme-preview" style="background: linear-gradient(135deg, #B026FF, #00D2FF);"></div>
+            <div class="neon-theme-text">
+              <span class="neon-name">Elektrik Menekşe</span>
+              <span class="neon-desc">Parlak Mor & Gece Mavisi</span>
+            </div>
+            <span class="neon-check">✓</span>
+          </div>
+
+          <div class="neon-theme-option" data-neon="emerald">
+            <div class="neon-theme-preview" style="background: linear-gradient(135deg, #00FF88, #00E5FF);"></div>
+            <div class="neon-theme-text">
+              <span class="neon-name">Matrix Zümrüt</span>
+              <span class="neon-desc">Neon Yeşil & Camgöbeği</span>
+            </div>
+            <span class="neon-check">✓</span>
+          </div>
+
+          <div class="neon-theme-option" data-neon="solar">
+            <div class="neon-theme-preview" style="background: linear-gradient(135deg, #FF5E00, #FF007F);"></div>
+            <div class="neon-theme-text">
+              <span class="neon-name">Solar Ateş</span>
+              <span class="neon-desc">Neon Alev Turuncusu & Pembe</span>
+            </div>
+            <span class="neon-check">✓</span>
+          </div>
+
+          <div class="neon-theme-option" data-neon="gold">
+            <div class="neon-theme-preview" style="background: linear-gradient(135deg, #FFD700, #FF3366);"></div>
+            <div class="neon-theme-text">
+              <span class="neon-name">Neon Altın</span>
+              <span class="neon-desc">Saf Altın Işıltısı & Yakut</span>
+            </div>
+            <span class="neon-check">✓</span>
+          </div>
+        </div>
+
+        <div class="edge-light-control-card">
+          <div class="edge-light-info">
+            <span class="edge-light-title">Kenar Işıklandırma (Edge Light)</span>
+            <span class="edge-light-desc">Müzik çalarken parlayan kenar aydınlatması</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="edgeLightToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="dialog-footer">
+          <button id="closeNeonThemeBtn" class="btn-primary">Kapat</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings & Preferences Modal -->
+    <div id="settingsModal" class="modal-backdrop" style="display: none;">
+      <div class="dialog-box settings-dialog">
+        <div class="settings-dialog-header">
+          <div class="settings-header-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="dialog-title">Ayarlar ve Tercihler</h3>
+            <span class="dialog-sub">Ses, atmosfer ve oynatıcı tercihleri</span>
+          </div>
+        </div>
+
+        <div class="settings-scroll-content">
+          <!-- Section 1: Ses & Atlama -->
+          <div class="settings-group">
+            <span class="settings-group-title">SES VE OYNATMA</span>
+            
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <span class="settings-item-title">Hızlı Atlama Süresi</span>
+                <span class="settings-item-desc">İleri ve geri sarma butonlarının atlama miktarı</span>
+              </div>
+              <div class="settings-chip-group" id="seekStepGroup">
+                <button class="settings-chip" data-step="5">5s</button>
+                <button class="settings-chip active" data-step="10">10s</button>
+                <button class="settings-chip" data-step="15">15s</button>
+                <button class="settings-chip" data-step="30">30s</button>
+              </div>
+            </div>
+
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <span class="settings-item-title">Ekranı Açık Tut</span>
+                <span class="settings-item-desc">Müzik dinlerken ekranın kapanmasını önle</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="keepScreenOnToggle" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Section 2: Görünüm & Efektler -->
+          <div class="settings-group">
+            <span class="settings-group-title">GÖRÜNÜM VE ATMOSFER</span>
+
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <span class="settings-item-title">Blurlu Neon Atmosfer Arka Planı</span>
+                <span class="settings-item-desc">Gözü yormayan yumuşak arka plan bulanıklığı ve ışıma</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="ambientBlurToggle" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <span class="settings-item-title">Dönen Vinil Plak Animasyonu</span>
+                <span class="settings-item-desc">Oynatılırken albüm kapağının vinil plak gibi dönmesi</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="spinningVinylToggle" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-item clickable" id="openThemeFromSettings">
+              <div class="settings-item-info">
+                <span class="settings-item-title">Neon Renk Temasını Değiştir</span>
+                <span class="settings-item-desc">Cyber, Menekşe, Zümrüt, Solar ve Altın paletleri</span>
+              </div>
+              <span class="settings-arrow">›</span>
+            </div>
+          </div>
+
+          <!-- Section 3: Kütüphane & Demo -->
+          <div class="settings-group">
+            <span class="settings-group-title">KÜTÜPHANE VE DEMO</span>
+
+            <button id="btnReloadDemoTracks" class="settings-action-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+              </svg>
+              <span>Örnek Demo Parçaları Yükle (2 Adet Synthwave)</span>
+            </button>
+
+            <button id="btnRescanFromSettings" class="settings-action-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+              </svg>
+              <span>Cihaz Müzik Kütüphanesini Tara</span>
+            </button>
+
+            <button id="btnClearHistoryFromSettings" class="settings-action-btn text-danger">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+              </svg>
+              <span>Çalma Geçmişini Sıfırla</span>
+            </button>
+          </div>
+
+          <!-- Section 4: Hakkında -->
+          <div class="settings-group about-group">
+            <span class="settings-group-title">HAKKINDA</span>
+            <div class="about-card">
+              <div class="about-title">Neon Music Player v2.0</div>
+              <div class="about-sub">Android Media3 ExoPlayer Audio Engine • Yerel Room SQLite Veritabanı • 32-bit Floating Hi-Res Audio</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dialog-footer">
+          <button id="closeSettingsBtn" class="btn-primary">Tamam</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
