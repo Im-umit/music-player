@@ -1,0 +1,19 @@
+{
+  "name": "muzik-calar",
+  "version": "1.0.0",
+  "description": "Android Native + Web Müzik Çalar Uygulaması",
+  "main": "app/src/main/assets/web/index.html",
+  "scripts": {
+    "build": "gradle assembleDebug"
+  },
+  "keywords": [
+    "music",
+    "android",
+    "exoplayer",
+    "media3",
+    "room",
+    "player"
+  ],
+  "author": "AI Studio",
+  "license": "MIT"
+}

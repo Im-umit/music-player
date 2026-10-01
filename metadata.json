@@ -1,0 +1,6 @@
+{
+  "name": "Neon Music Player",
+  "description": "Android için fütüristik neon tasarımlı müzik çalar, Media3 ExoPlayer, dinamik neon ışıklandırma, ekolayzır ve görselleştirici desteği.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

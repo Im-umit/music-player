@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Neon Music Player</string>
+    <string name="notification_channel_name">Müzik Oynatma</string>
+    <string name="notification_channel_desc">Müzik çalar bildirim ve oynatma kontrolleri</string>
+</resources>
