@@ -309,22 +309,20 @@ class MusicBridge(
     fun playSong(songId: Long, queueJson: String, index: Int) {
         activity.runOnUiThread {
             activity.ensureServiceStarted()
+        }
+
+        bridgeScope.launch {
             val service = MusicPlaybackService.instance
             if (service != null) {
-                bridgeScope.launch { startQueuePlayback(service, queueJson, index, songId) }
+                startQueuePlayback(service, queueJson, index, songId)
             } else {
-                bridgeScope.launch {
-                    var retries = 0
-                    while (MusicPlaybackService.instance == null && retries < 15) {
-                        kotlinx.coroutines.delay(100)
-                        retries++
-                    }
-                    activity.runOnUiThread {
-                        MusicPlaybackService.instance?.let { s ->
-                            startQueuePlayback(s, queueJson, index, songId)
-                        }
-                    }
+                var retries = 0
+                while (MusicPlaybackService.instance == null && retries < 15) {
+                    kotlinx.coroutines.delay(100)
+                    retries++
                 }
+                val readyService = MusicPlaybackService.instance ?: return@launch
+                startQueuePlayback(readyService, queueJson, index, songId)
             }
         }
     }
@@ -333,22 +331,20 @@ class MusicBridge(
     fun playAllShuffled(queueJson: String) {
         activity.runOnUiThread {
             activity.ensureServiceStarted()
+        }
+
+        bridgeScope.launch {
             val service = MusicPlaybackService.instance
             if (service != null) {
-                bridgeScope.launch { startShuffledPlayback(service, queueJson) }
+                startShuffledPlayback(service, queueJson)
             } else {
-                bridgeScope.launch {
-                    var retries = 0
-                    while (MusicPlaybackService.instance == null && retries < 15) {
-                        kotlinx.coroutines.delay(100)
-                        retries++
-                    }
-                    activity.runOnUiThread {
-                        MusicPlaybackService.instance?.let { s ->
-                            startShuffledPlayback(s, queueJson)
-                        }
-                    }
+                var retries = 0
+                while (MusicPlaybackService.instance == null && retries < 15) {
+                    kotlinx.coroutines.delay(100)
+                    retries++
                 }
+                val readyService = MusicPlaybackService.instance ?: return@launch
+                startShuffledPlayback(readyService, queueJson)
             }
         }
     }
@@ -998,56 +994,35 @@ class MusicBridge(
                     val diff = kotlin.math.abs(remoteDuration - durationSec)
                     score += when {
                         diff <= 2.0 -> 15
-                        diff <= 5.0 -> 8
-                        diff <= 8.0 -> 3
+                        diff <= 5.0 -> 10
+                        diff <= 10.0 -> 5
                         else -> -10
                     }
                 }
             }
-            if (item.optString("syncedLyrics").isNotBlank()) score += 5
 
             if (score > bestScore) {
                 bestScore = score
                 best = item
             }
         }
+
         return best?.toString()
     }
 
-    private fun httpGet(urlStr: String): String? {
-        var connection: java.net.HttpURLConnection? = null
+    private fun httpGet(urlString: String): String? {
         return try {
-            val url = java.net.URL(urlStr)
-            connection = url.openConnection() as java.net.HttpURLConnection
+            val url = java.net.URL(urlString)
+            val connection = url.openConnection() as java.net.HttpURLConnection
             connection.requestMethod = "GET"
-            connection.connectTimeout = 5000
-            connection.readTimeout = 5000
-            connection.setRequestProperty("User-Agent", "NeonMusicPlayer/1.0 (Android)")
-            connection.setRequestProperty("Accept", "application/json")
-
-            val responseCode = connection.responseCode
-            if (responseCode == java.net.HttpURLConnection.HTTP_OK) {
-                val maxBytes = 512 * 1024
-                connection.inputStream.use { input ->
-                    val buffer = ByteArray(8192)
-                    val output = java.io.ByteArrayOutputStream()
-                    var total = 0
-                    while (true) {
-                        val read = input.read(buffer)
-                        if (read < 0) break
-                        total += read
-                        if (total > maxBytes) return@use null
-                        output.write(buffer, 0, read)
-                    }
-                    output.toString(Charsets.UTF_8.name())
-                }
-            } else {
-                null
-            }
+            connection.connectTimeout = 15000
+            connection.readTimeout = 15000
+            connection.connect()
+            val code = connection.responseCode
+            if (code !in 200..299) return null
+            connection.inputStream.bufferedReader().use { it.readText() }
         } catch (e: Exception) {
             null
-        } finally {
-            connection?.disconnect()
         }
     }
 }
