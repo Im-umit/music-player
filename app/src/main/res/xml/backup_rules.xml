@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Playback state contains device-specific MediaStore/content URIs and is not portable. -->
+    <exclude domain="sharedpref" path="music_player_state.xml" />
+</full-backup-content>
