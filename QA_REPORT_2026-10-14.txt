@@ -1,0 +1,25 @@
+NEONMUSIC — FINAL-FIXED11 QA REPORT
+Date: 2026-10-14
+Base: NeonMusic-Final-Fixed10.zip
+
+FIXES APPLIED
+1. MusicBridge cache race: the asynchronous startup cache warm-up could complete after a MediaStore scan and publish an older snapshot. Added a revision/lock guard so only the latest revision can publish.
+2. Scan cache race: a superseded scan cannot overwrite the cache published by a newer scan.
+3. Cache edits: favorite and delete cache mutations are serialized with revision updates.
+4. Native search normalization: replaced ASCII-only matching with Unicode letter/number handling. Latin accents are folded while combining marks from other scripts are preserved (for example, Cyrillic й remains distinguishable from и).
+5. Added SearchEngine tests for non-Latin metadata and empty queries/zero result limits.
+
+CHECKS RUN
+- ZIP integrity: passed.
+- app.js Node syntax check: passed.
+- i18n.js Node syntax check: passed.
+- All XML files parsed: passed.
+- Static AndroidMusicBridge contract: 53 JS calls found; no missing Kotlin method names.
+- Standalone Kotlin compilation/execution of SearchEngine with a minimal Song model: 7 checks passed (Turkish normalization, featuring variants, Cyrillic search, typo tolerance, blank query handling).
+- Gradle testDebugUnitTest attempted, but Gradle wrapper could not download Gradle 9.3.1 because services.gradle.org DNS/network access is unavailable in this environment.
+
+NOT VERIFIED
+- Full Android/Kotlin project compilation.
+- Android Lint, Room/KSP code generation, unit-test suite execution, APK assembly, release shrinker behavior, and physical-device playback/permission testing.
+
+Do not treat this report as a successful Android build certificate. It records only the checks actually executed in this environment.
