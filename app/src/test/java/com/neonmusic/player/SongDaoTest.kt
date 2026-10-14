@@ -28,7 +28,7 @@ class SongDaoTest {
         db.close()
     }
 
-    private fun song(id: Long, title: String, artist: String, favorite: Boolean = false) = SongEntity(
+    private fun song(id: Long, title: String, artist: String, favorite: Boolean = false): SongEntity = SongEntity(
         id = id,
         title = title,
         artist = artist,
@@ -74,8 +74,9 @@ class SongDaoTest {
 
     @Test
     fun largeLibrarySearchReturnsAtMostExpectedNativeLimit() {
-        val songs = (1L..5000L).map { id -> song(id, "Track $id", "Artist $id") }
-        runBlocking { db.songDao().insertSongs(songs) }
+        val songEntities = (1L..5000L).map { id -> song(id, "Track $id", "Artist $id") }
+        val songs = songEntities.map(SongEntity::toSong)
+        runBlocking { db.songDao().insertSongs(songEntities) }
         // This verifies the database can hold a realistically sized library without
         // changing the native SearchEngine's 100-result contract.
         assertEquals(100, com.neonmusic.player.util.SearchEngine.search("track", songs, 100).size)
