@@ -83,6 +83,6 @@ class SongDaoTest {
         runBlocking { db.songDao().insertSongs(songs) }
         // This verifies the database can hold a realistically sized library without
         // changing the native SearchEngine's 100-result contract.
-        assertEquals(100, com.neonmusic.player.util.SearchEngine.search("track", songs, 100).size)
+        assertEquals(100, com.neonmusic.player.util.SearchEngine.search("track", songs.map { it.toSong() }, 100)
     }
 }
