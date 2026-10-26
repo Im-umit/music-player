@@ -1,0 +1,24 @@
+diff --git a/app/src/test/java/com/neonmusic/player/ManifestContractTest.kt b/app/src/test/java/com/neonmusic/player/ManifestContractTest.kt
+--- a/app/src/test/java/com/neonmusic/player/ManifestContractTest.kt
++++ b/app/src/test/java/com/neonmusic/player/ManifestContractTest.kt
+@@
+ import org.junit.Test
++import org.junit.runner.RunWith
++import org.robolectric.RobolectricTestRunner
++import org.robolectric.annotation.Config
+
++@RunWith(RobolectricTestRunner::class)
++@Config(sdk = [36])
+ class ManifestContractTest {
+diff --git a/app/src/test/java/com/neonmusic/player/SongDaoTest.kt b/app/src/test/java/com/neonmusic/player/SongDaoTest.kt
+--- a/app/src/test/java/com/neonmusic/player/SongDaoTest.kt
++++ b/app/src/test/java/com/neonmusic/player/SongDaoTest.kt
+@@
+ import org.junit.Test
++import org.junit.runner.RunWith
++import org.robolectric.RobolectricTestRunner
++import org.robolectric.annotation.Config
+
++@RunWith(RobolectricTestRunner::class)
++@Config(sdk = [36])
+ class SongDaoTest {

@@ -1,0 +1,27 @@
+# Gradle and Android build output
+.gradle/
+**/build/
+out/
+
+# Local SDK and IDE state
+local.properties
+.idea/
+*.iml
+.DS_Store
+
+# Generated Android packages and native binaries
+*.apk
+*.aab
+*.dex
+
+# Signing material and local secrets (never commit these)
+*.jks
+*.keystore
+.env
+.env.*
+!.env.example
+
+# OS/editor temporary files
+*.swp
+*.swo
+*~

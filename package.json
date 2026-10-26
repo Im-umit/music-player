@@ -1,0 +1,19 @@
+{
+  "name": "neon-music",
+  "version": "1.0.0",
+  "description": "Neon Music Android music player",
+  "main": "app/src/main/assets/web/index.html",
+  "scripts": {
+    "build": "gradle assembleDebug"
+  },
+  "keywords": [
+    "music",
+    "android",
+    "exoplayer",
+    "media3",
+    "room",
+    "player"
+  ],
+  "author": "Neon Music",
+  "license": "MIT"
+}
